@@ -128,6 +128,7 @@
                                             <option value="">Type</option>
                                             <option value="Admin">Admin</option>
                                             <option value="User">User</option>
+                                            <option value="Student">Student</option>
                                         </select>
                                         <has-error :form="form" field="type"></has-error>
                                     </div>
