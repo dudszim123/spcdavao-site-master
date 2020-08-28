@@ -23,13 +23,14 @@ let routes = [
     {path: '/users', component: require('./components/UsersComponent.vue').default },
     {path: '/applicants', component: require('./components/Applicants.vue').default },
     {path: '/student-portal', component: require('./components/StudentPortalComponent.vue').default }
+    
 ];
 const router = new VueRouter({
     mode: 'history',
     routes
 });
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
+Vue.component('registration', require('./components/Registration.vue').default);
 
 const app = new Vue({
     el: '#app',

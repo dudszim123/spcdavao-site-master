@@ -29,6 +29,7 @@
         "chart.js": "^2.9.3",
         "vform": "^1.0.1",
         "vue-chartjs": "^3.5.0",
+        "vue-good-wizard": "^1.4.1",
         "vue-router": "^3.4.3"
     }
 }

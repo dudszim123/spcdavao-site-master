@@ -49,7 +49,7 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="#header">Home</a></li>
-          <li><a href="#hero">Enrolment</a></li>
+          <li><a href="#hero">Online Enrolment</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
@@ -110,7 +110,7 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="#about" class="btn-get-started scrollto">ONLINE ENROLMENT</a>
+        <a href="/applicant" class="btn-get-started scrollto">ONLINE ENROLMENT</a>
       </div>
 
       <div class="row icon-boxes">
