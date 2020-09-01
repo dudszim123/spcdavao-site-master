@@ -217,7 +217,7 @@ img{
                                 </div>
                             </vue-good-wizard>
                         </div>
-                        </el-form>
+                  
                     </div>
                 </div>
             </div>
@@ -225,7 +225,7 @@ img{
         </section>
     </div>
 </template>
-<script >
+<script>
 import Vue from 'vue';
 import VueGoodWizard from 'vue-good-wizard';
 Vue.use(VueGoodWizard);

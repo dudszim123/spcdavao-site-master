@@ -71,12 +71,10 @@
         <div class="portfolio-details-container">
 
           <div class="owl-carousel portfolio-details-carousel">
-            <img src="assets/img/portfolio/portfolio-details-1.jpg" class="img-fluid" alt="">
-            <img src="assets/img/portfolio/portfolio-details-2.jpg" class="img-fluid" alt="">
-            <img src="assets/img/portfolio/portfolio-details-3.jpg" class="img-fluid" alt="">
-            <img src="assets/img/portfolio/portfolio-details-1.jpg" class="img-fluid" alt="">
-            <img src="assets/img/portfolio/portfolio-details-2.jpg" class="img-fluid" alt="">
-            <img src="assets/img/portfolio/portfolio-details-3.jpg" class="img-fluid" alt="">
+            <img src="assets/img/CkVcE8fVAAAQSQ11.jpeg" class="img-fluid" alt="">
+            <img src="assets/img/58648147_d4dc720e33_b.jpg" class="img-fluid" alt="">
+            <img src="assets/img/SPC-Jubilee2.jpg" class="img-fluid" alt="">
+            <img src="assets/img/tumblr_inline_psb7ijlKCZ1tvksca_540.jpg" class="img-fluid" alt="">
           </div>
 
           <!-- <div class="portfolio-info">
@@ -266,31 +264,46 @@
         <div class="row">
 
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-1.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/proquestcentral2.jpg" class="img-fluid" alt="">
           </div>
-
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-2.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/Ebook_Central.png" class="img-fluid" alt="">
           </div>
-
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-3.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/image.png" class="img-fluid" alt="">
           </div>
-
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-4.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/gale-database-logo.png" class="img-fluid" alt="">
           </div>
-
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-5.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/index.png" class="img-fluid" alt="">
           </div>
-
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
-            <img src="assets/img/clients/client-6.png" class="img-fluid" alt="">
+            <img src="assets/img/partners-image/scaled-0x150_World_Scientific_Publishing_small.jpg" class="img-fluid" alt="">
           </div>
-
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/unnamed.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/Primos-1024x369.jpg" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/BMC_logo_main_flat.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/1280px-US-NLM-PubMed-Logo.svg.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/springer.jpg" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/Nature_Logo-e1560854965243.png" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <img src="assets/img/partners-image/doaj.png" class="img-fluid" alt="">
+          </div>
         </div>
-
+      
       </div>
     </section><!-- End Clients Section -->
 
@@ -721,6 +734,7 @@
 
         <div class="row">
 
+         
           <div class="col-lg-4 col-md-6" data-aos="zoom-im" data-aos-delay="100">
             <div class="box">
               <h3>Free</h3>
@@ -737,7 +751,8 @@
               </div>
             </div>
           </div>
-
+       
+        
           <div class="col-lg-4 col-md-6 mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="100">
             <div class="box featured">
               <h3>Business</h3>
@@ -754,7 +769,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-lg-4 col-md-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="100">
             <div class="box">
               <h3>Developer</h3>
@@ -849,7 +863,8 @@
         </div>
 
         <div>
-          <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
+          <!-- <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/place/San+Pedro+College/@7.0776648,125.6133708,17z/data=!3m1!4b1!4m5!3m4!1s0x32f96da231a62f97:0x15f00c423653dca1!8m2!3d7.0776595!4d125.6155595" frameborder="0" allowfullscreen></iframe> -->
+            <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.4160847528187!2d125.6133708152799!3d7.077664818435119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f96da231a62f97%3A0x15f00c423653dca1!2sSan%20Pedro%20College!5e0!3m2!1sen!2sph!4v1598978184127!5m2!1sen!2sph" frameborder="0" allowfullscreen></iframe>
         </div>
 
         <div class="row mt-5">
@@ -859,7 +874,7 @@
               <div class="address">
                 <i class="icofont-google-map"></i>
                 <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>12 Guzman St, Obrero, Davao City, Davao del Sur</p>
               </div>
 
               <div class="email">
@@ -871,7 +886,7 @@
               <div class="phone">
                 <i class="icofont-phone"></i>
                 <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
+                <p>+63822210634</p>
               </div>
 
             </div>

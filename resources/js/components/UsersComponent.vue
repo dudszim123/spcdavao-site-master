@@ -17,7 +17,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button type="button" class="btn  btn-success btn-sm" data-toggle="modal" data-target="#add-modal">Add New User <i class="fas fa-user-plus"></i></button>
+                                <button type="button" @click="newModal" class="btn  btn-success btn-sm" data-toggle="modal" data-target="#add-modal">Add New User <i class="fas fa-user-plus"></i></button>
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -36,6 +36,7 @@
                                             <th>User Name</th>
                                             <th>Type</th>
                                             <th>Status</th>
+                                            <th>Created</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -45,9 +46,10 @@
                                             <td>{{ user.name }}</td>
                                             <td>{{ user.type | ToUpperCaseText() }}</td>
                                             <td>{{ user.activeUser | ActiveText() }}</td>
+                                            <td>{{ user.created_at | myDate }}</td>
                                             <td>
-                                                <a href="#"><i class="fas fa-edit pr-2"></i></a>
-                                                <a href="#"><i class="fas fa-trash-alt pr-2"></i></a>
+                                                <a href="#" @click="editModal(user)"><i class="fas fa-edit pr-2"></i></a>
+                                                <a href="#" @click="deleteUser(user.id)"><i class="fas fa-trash-alt pr-2"></i></a>
                                                 <a href="#"><i class="fas fa-eye pr-2"></i></a>
                                                 <a href="#"><i class="fas fa-key"></i></a>
                                             </td>
@@ -67,28 +69,29 @@
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Add New</h4>
+                        <h4 v-show="editMode" class="modal-title">Update user information</h4>
+                        <h4 v-show="!editMode" class="modal-title">Add New</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <!-- form start -->
-                    <form @submit.prevent="createUser" @keydown="form.onKeydown($event)">
+                    <form @submit.prevent="editMode ? updateUser() : createUser()" @keydown="form.onKeydown($event)">
                         <div class="modal-body">
                             <div class="card-body">
                               
-                                <div class="form-group " hidden>
+                                <div v-show="editMode" class="form-group">
                                     <div class="custom-control custom-switch">
-                                        <input v-model="form.activeUser" type="checkbox" name="activeUser" class="custom-control-input" id="customSwitch1"
+                                        <input v-model="form.activeUser" type="checkbox" name="activeUser" class="custom-control-input" id="activeUser"
                                         :class="{ 'is-invalid': form.errors.has('activeUser')}" >
-                                        <label class="custom-control-label" for="customSwitch1">Active</label>
+                                        <label class="custom-control-label" for="activeUser">Active</label>
                                          <has-error :form="form" field="activeUser"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="firstName">ID</label>
                                     <input v-model="form.number" type="text" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('number')}" name="number" id="number" placeholder="ID">
+                                    :class="{ 'is-invalid': form.errors.has('number')}" name="number" id="number" placeholder="ID" :disabled="editMode">
                                     <has-error :form="form" field="number"></has-error>
                                 </div>
                                 <div class="form-group">
@@ -200,7 +203,8 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
-                            <button type="submit" class="btn btn-primary">Create <i class="fas fa-save"></i></button>
+                            <button v-show="editMode" type="submit" class="btn btn-primary">Update <i class="fas fa-save"></i></button>
+                            <button v-show="!editMode" type="submit" class="btn btn-primary">Create <i class="fas fa-save"></i></button>
                         </div>
                     </form>
                 </div>
@@ -216,6 +220,7 @@
     export default {
         data(){
             return {
+                editMode: false,
                 users: {},
                 form: new Form({
                     id:'',
@@ -244,18 +249,100 @@
             loadData(){
                 axios.get('api/user').then(({data}) => (this.users = data.data));
             },
+            newModal(){
+                this.editMode = false;
+                this.form.clear ();
+                this.form.reset();
+                $('#add-modal').modal('show');
+            },
+            editModal(user){
+                this.editMode = true;
+                this.form.clear ();
+                this.form.reset();
+                $('#add-modal').modal('show');
+                $('#number')
+                this.form.fill(user);
+            },
+           
             createUser(){
-                this.form.post('api/user');
+                this.$Progress.start();
+                this.form.post('api/user')
+                .then(()=>{
+                    Fire.$emit('AfterCreate');
+                    $('#add-modal').modal('hide');
+                    toast.fire({
+                        icon: 'success',
+                        title: 'New User created successfully'
+                    });
+                    this.$Progress.finish();
+                })
+                .catch(()=>{
+                   this.$Progress.fail();
+                });
+             
+            },
+            updateUser(){
+                this.$Progress.start();
+                this.form.put('api/user/'+this.form.id)
+                .then(()=>{
+                    Fire.$emit('AfterCreate');
+                    $('#add-modal').modal('hide');
+                    toast.fire({
+                        icon: 'success',
+                        title: 'User information updated successfully'
+                    });
+                    this.$Progress.finish();
+                })
+                .catch(()=>{
+                    this.$Progress.fail();
+                });
+            },
+            deleteUser(id){
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.value) {
+                        this.$Progress.start();
+                        this.form.delete('api/user/'+id)
+                        .then(()=>{
+                            swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            this.$Progress.finish();
+                            Fire.$emit('AfterCreate');
+                        })
+                        .catch(()=>{
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!'
+                            });
+                            this.$Progress.fail();
+                        });
+                    }else{this.$Progress.fail();}
+                })
             },
             setName(){
                 this.form.name = this.form.lastName+', '+this.form.firstName+ ' '+ this.form.middleName+ ' '+ this.form.extensionName;
             },
         },
         created(){
+            this.$Progress.start();
             this.loadData();
+            this.$Progress.finish();
+            Fire.$on('AfterCreate',()=>{
+                this.loadData();
+            });
         },
         mounted() {
-            console.log('Component mounted Users.')
         }
     }
 </script>
