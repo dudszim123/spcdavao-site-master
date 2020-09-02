@@ -10,6 +10,10 @@ use App\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -44,13 +48,13 @@ class UserController extends Controller
         ]);
         return User::create([
             'number' => $request->number,
-            'name' => $request->lastName.', '.$request->lastName.' '.$request->middleName.' '.$request->extensionName,
-            'firstName' => $request->firstName,
-            'lastName' => $request->lastName,
-            'middlenmae' => $request->middleName,
+            'name' => strtoupper($request->lastName.', '.$request->firstName.' '.$request->extensionName.' '.$request->middleName),
+            'firstName' => strtoupper($request->firstName),
+            'lastName' => strtoupper($request->lastName),
+            'middlenmae' => strtoupper($request->middleName),
             'extensionName' => $request->exntesionName,
             'type' => $request->type,
-            'address' => $request->address,
+            'address' => strtoupper($request->address),
             'email' => $request->email,
             'password' =>  Hash::make($request->password),
             'gender' => $request->gender,
@@ -71,7 +75,10 @@ class UserController extends Controller
     {
         //
     }
-
+    public function profile()
+    {
+        return auth('api')->user();
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -97,8 +104,31 @@ class UserController extends Controller
             'gender' => 'required|string',
             'civilStatus' => 'required|string',
         ]);
-        $request->password = Hash::make($request['password']);
-        $user->update($request->all());
+            
+        $user->name = \strtoupper($request->name);
+        $user->email = $request->email;
+        if($request['password'] != ''){
+            $user->password = Hash::make($request['password']);
+        }      
+        $user->type = $request->type;
+        $user->activeUser = $request->activeUser;
+        $user->image= $request->image;
+        $user->firstName = \strtoupper($request->firstName);
+        $user->lastName = \strtoupper($request->lastName);
+        $user->middleName = \strtoupper($request->middleName);
+        $user->extensionName = $request->extensionName;
+        $user->gender = $request->gender;
+        $user->civilStatus = $request->civilStatus;
+        $user->contacts = $request->contacts;
+        $user->address = \strtoupper($request->address);
+        $user->RFID= $request->RFID;
+        $user->height = $request->height;
+        $user->weight = $request->weight;
+        $user->religion = $request->religion;
+        $user->nationality = $request->nationality;
+        $user->dualCitizenship = $request->dualCitizenship;
+        $user->tribe = $request->tribe;
+        $user->save();
         return ['message' => 'user ID: '.$id];
     }
 

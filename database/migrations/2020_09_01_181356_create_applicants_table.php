@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateApplicantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,24 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('applicants', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('number')->unique();
+            $table->unsignedBigInteger('program_id')->nullable();
+
+            $table->string('category');
+            $table->string('type');
+            $table->integer('level');
+
             $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('type')->nullable();
-            $table->tinyInteger('activeUser')->default(1);
-            $table->string('image')->nullable();
+            
             $table->string('firstName')->nullable();
             $table->string('lastName');
             $table->string('middleName')->nullable();
             $table->string('extensionName')->nullable();
+            $table->string('gender')->default('Male');
             $table->date('birthdate')->nullable();
             $table->string('placeOfBirth')->nullable();
-            $table->string('gender')->default('Male');
             $table->set('civilStatus',['Single','Married','Separated','Widowed'])->default('Single');
             $table->string('contacts')->nullable();
             $table->string('address')->nullable();
@@ -41,10 +42,16 @@ class CreateUsersTable extends Migration
             $table->integer('dualCitizenship')->default(0);
             $table->string('tribe')->default('NONE');
             $table->string('bloodType')->default('O');
-            $table->rememberToken();
+            $table->string('imageFile1')->nullable();
+            $table->string('imageFile2')->nullable();
+            $table->string('imageFile3')->nullable();
+            $table->string('imageFile4')->nullable();
+            $table->string('imageFile5')->nullable();
+            $table->string('imageFile6')->nullable();
             $table->timestamps();
 
-            $table->index(['id', 'number', 'name', 'created_at']);
+            $table->foreign('program_id')->references('id')->on('programs');
+            $table->index(['name', 'program_id', 'created_at']);
         });
     }
 
@@ -55,6 +62,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('applicants');
     }
 }

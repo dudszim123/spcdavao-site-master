@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+// passport
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    // passport
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -31,7 +34,13 @@ class User extends Authenticatable
         'civilStatus',
         'contacts',
         'address',
-        'RFID'
+        'RFID',
+        'height',
+        'wieght',
+        'religion',
+        'nationality',
+        'dualCitizenship',
+        'tribe'
     ];
 
     /**

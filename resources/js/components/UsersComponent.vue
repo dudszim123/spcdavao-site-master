@@ -50,7 +50,6 @@
                                             <td>
                                                 <a href="#" @click="editModal(user)"><i class="fas fa-edit pr-2"></i></a>
                                                 <a href="#" @click="deleteUser(user.id)"><i class="fas fa-trash-alt pr-2"></i></a>
-                                                <a href="#"><i class="fas fa-eye pr-2"></i></a>
                                                 <a href="#"><i class="fas fa-key"></i></a>
                                             </td>
                                         </tr>
@@ -89,56 +88,69 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="firstName">ID</label>
+                                    <label for="number">ID</label>
                                     <input v-model="form.number" type="text" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('number')}" name="number" id="number" placeholder="ID" :disabled="editMode">
                                     <has-error :form="form" field="number"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <input v-model="form.name" type="text" name="name" class="form-control" 
+                                    <input style="text-transform: uppercase" v-model="form.name" type="text" name="name" class="form-control" 
                                     :class="{ 'is-invalid': form.errors.has('name')}" id="name" disabled>
                                     <has-error :form="form" field="name"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="lastName">Last Name</label>
-                                    <input v-model="form.lastName" @keydown="setName" type="text" name="lastName" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('lastName')}" id="lastName" placeholder="Last Name" upper>
+                                    <input style="text-transform: uppercase" v-model="form.lastName" @keydown="setName" type="text" name="lastName" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('lastName')}" id="lastName" placeholder="Last Name">
                                     <has-error :form="form" field="lastName"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
-                                    <input v-model="form.firstName" @keydown="setName" type="text" name="firstName" class="form-control" 
+                                    <input style="text-transform: uppercase" v-model="form.firstName" @keydown="setName" type="text" name="firstName" class="form-control" 
                                     :class="{ 'is-invalid': form.errors.has('firstName')}" id="firstName" placeholder="First Name">
                                     <has-error :form="form" field="firstName"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <label for="lastName">Middle Name</label>
-                                    <input v-model="form.middleName" @keydown="setName" type="text" name="middleName" class="form-control" 
-                                    :class="{ 'is-invalid': form.errors.has('middleName')}" id="middleName" placeholder="Middle Name">
+                                    <label for="middleName">Middle Name</label>
+                                    <input style="text-transform: uppercase" v-model="form.middleName" @keydown="setName" type="text" name="middleName" class="form-control" 
+                                    :class="{ 'is-invalid': form.errors.has('middleName')}" id="middleName" placeholder="Middle Name" uppercase>
                                     <has-error :form="form" field="middleName"></has-error>
                                 </div>
-                                <div class="form-group">
-                                    <label for="extensionName">Extension Name</label>
-                                    <input v-model="form.extensionName" @keydown="setName" type="text" name="extensionName" class="form-control" 
-                                    :class="{ 'is-invalid': form.errors.has('extensionName')}" id="extensionName" placeholder="Extension Name">
+                                 <div class="form-group">
+                                    <label>Extension Name</label>
+                                    <select v-model="form.extensionName" @change="setName" class="form-control" name="extensionName" id="extensionName" 
+                                    :class="{ 'is-invalid': form.errors.has('extensionName')}" >
+                                        <option value=""></option>
+                                        <option value="JR.">JR.</option>
+                                        <option value="I">I</option>
+                                        <option value="II">II</option>
+                                        <option value="III">III</option>
+                                        <option value="IV">IV</option>
+                                        <option value="V">V</option>
+                                        <option value="VI">VI</option>
+                                        <option value="VII">VII</option>
+                                        <option value="VIII">VIII</option>
+                                        <option value="IX">IX</option>
+                                        <option value="X">X</option>
+                                    </select>
                                     <has-error :form="form" field="extensionName"></has-error>
-                                </div>
+                                </div>      
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label>User Type</label>
-                                        <select v-model="form.type" class="form-control" name="type" id="type" 
-                                        :class="{ 'is-invalid': form.errors.has('type')}" >
-                                            <option value="">Type</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="User">User</option>
-                                            <option value="Student">Student</option>
-                                        </select>
-                                        <has-error :form="form" field="type"></has-error>
-                                    </div>
+                                    <label>User Type</label>
+                                    <select v-model="form.type" class="form-control" name="type" id="type" 
+                                    :class="{ 'is-invalid': form.errors.has('type')}" >
+                                        <option value="">Type</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Student">Registrar</option>
+                                        <option value="Student">Admission</option>
+                                        <option value="Student">Human Resource</option>
+                                        <option value="Student">Student</option>
+                                    </select>
+                                    <has-error :form="form" field="type"></has-error>
                                 </div>                       
                                 <div class="form-group">
                                     <label for="Address">Address</label>
-                                    <textarea v-model="form.address" class="form-control" rows="3" 
+                                    <textarea style="text-transform: uppercase" v-model="form.address" class="form-control" rows="3" 
                                     name="address" id="address" 
                                     placeholder="Address"></textarea>
                                 </div>
@@ -215,7 +227,6 @@
       <!-- /.modal -->
     </div>
 </template>
-
 <script>
     export default {
         data(){
@@ -331,7 +342,7 @@
                 })
             },
             setName(){
-                this.form.name = this.form.lastName+', '+this.form.firstName+ ' '+ this.form.middleName+ ' '+ this.form.extensionName;
+                this.form.name = this.form.lastName+', '+this.form.firstName+' '+this.form.extensionName+' '+this.form.middleName;
             },
         },
         created(){
@@ -346,3 +357,4 @@
         }
     }
 </script>
+

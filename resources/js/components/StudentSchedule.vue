@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section class="content">
+        <section class="content mt-4">
             <div class="container-fluid">
                 
             </div>

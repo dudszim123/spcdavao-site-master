@@ -14,17 +14,13 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('height')->default('0');
-            $table->double('weight')->default(0);
-            $table->string('nationality');
-            $table->integer('dualCitizenship');
-            $table->string('tribe');
-            $table->string('religion');
-            $table->string('contacts');
+            $table->unsignedBigInteger('program_id')->nullable();
+
+            $table->integer('level')->default(1);
             $table->string('boardingHouseAddress')->nullable();
-            $table->string('birthOrder');
+            $table->string('birthOrder')->nullable();
             $table->string('reasonForEnrollingAtSpc')->nullable();
             $table->string('familyBackGround')->nullable();
             $table->string('fatherName')->nullable();
@@ -64,9 +60,13 @@ class CreateStudentsTable extends Migration
             $table->string('contactEmergencyRelationship')->nullable();
             $table->string('contactEmergencyAddress')->nullable();
             $table->string('contactEmergengy')->nullable();
+            $table->tinyInteger('needToEdit')->default(1);
             $table->timestamps();
 
+            $table->primary('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('program_id')->references('id')->on('programs');
+            $table->index(['user_id', 'program_id', 'created_at']);
         });
     }
 

@@ -25,11 +25,10 @@
 			
 					<li class="nav-item d-none d-sm-inline-block">
 						@if(auth::user()->type == 'Student')
-							<a href="#" class="nav-link">STUDENT PORTAL</a>
+							<a href="#" class="nav-link">SPC - {{ auth::user()->type }} Portal</a>
 						@else
-							<a href="#" class="nav-link">SPC - ADMIN</a>
+							<a href="#" class="nav-link">SPC - {{ auth::user()->type }}</a>
 						@endIf
-						
 					</li>
 				</ul>
 
@@ -185,9 +184,9 @@
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
 									<router-link to="/applicants" class="nav-link">
-									<i class="fas fa-dot-circle nav-icon"></i>
-									<p>Applicants</p>
-									<span class="badge badge-info right">6</span>
+										<i class="fas fa-dot-circle nav-icon"></i>
+										<p>Applicants</p>
+										<span class="badge badge-info right">6</span>
 									</router-link>
 								</li>
 								<li class="nav-item">									<a href="#" class="nav-link">
@@ -197,14 +196,14 @@
 								</li>
 								<li class="nav-item">
 									<a href="#" class="nav-link">
-									<i class="fas fa-dot-circle nav-icon"></i>
-									<p>Editors</p>
+										<i class="fas fa-dot-circle nav-icon"></i>
+										<p>Editors</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="#" class="nav-link">
-									<i class="fas fa-dot-circle nav-icon"></i>
-									<p>Validation</p>
+										<i class="fas fa-dot-circle nav-icon"></i>
+										<p>Validation</p>
 									</a>
 								</li>
 							</ul>
@@ -217,8 +216,6 @@
 								</p>
 							</router-link>
 						</li>
-						<li class="nav-header">EXAMPLES</li>
-					
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 							<i class="nav-icon fas fa-image"></i>
@@ -245,6 +242,22 @@
 							</ul>
 						</li>
 						<li class="nav-item">
+							<router-link to="/user-profile" class="nav-link">
+							<i class="nav-icon fas fa-id-card-alt"></i>
+								<p>
+									My Profile
+								</p>
+							</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="/payment-history" class="nav-link">
+							<i class="nav-icon fas fa-money-bill-wave"></i>
+								<p>
+									Payment History
+								</p>
+							</router-link>
+						</li>
+						<!-- <li class="nav-item">
 							<a class="nav-link" href="{{ route('logout') }}"
 								onclick="event.preventDefault();
 												document.getElementById('logout-form').submit();">
@@ -252,6 +265,18 @@
 								{{ __('Logout') }}
 							</a>
 
+							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>
+						</li> -->
+						<li class="nav-item">
+							<a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
+								document.getElementById('logout-form').submit();">
+								<i class="nav-icon fas fa-power-off"></i>
+								<p>
+									Logout
+								</p>
+							</a>
 							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 								@csrf
 							</form>
