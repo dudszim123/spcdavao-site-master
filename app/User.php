@@ -40,7 +40,8 @@ class User extends Authenticatable
         'religion',
         'nationality',
         'dualCitizenship',
-        'tribe'
+        'tribe',
+        'bloodType'
     ];
 
     /**

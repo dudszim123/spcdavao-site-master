@@ -63,7 +63,6 @@ class CreateStudentsTable extends Migration
             $table->tinyInteger('needToEdit')->default(1);
             $table->timestamps();
 
-            $table->primary('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('program_id')->references('id')->on('programs');
             $table->index(['user_id', 'program_id', 'created_at']);

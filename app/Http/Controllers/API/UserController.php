@@ -45,6 +45,10 @@ class UserController extends Controller
             'email' => 'required|string|email|unique:users',
             'gender' => 'required|string',
             'civilStatus' => 'required|string',
+            'religion' => 'required|string',
+            'nationality' => 'required|string',
+            'tribe' => 'required|string',
+            'bloodType' => 'required|string'
         ]);
         return User::create([
             'number' => $request->number,
@@ -60,7 +64,15 @@ class UserController extends Controller
             'gender' => $request->gender,
             'civilStatus' => $request->civilStatus,
             'contacts' => $request->contacts,
-            'RFID' => $request->RFID
+            'RFID' => $request->RFID,
+            'heightFeet' => $request->heightFeet,
+            'heightIn' => $request->heightIn,
+            'weight' => $request->weight,
+            'religion' => $request->religion,
+            'nationaltiy' => $request->nationality,
+            'dualCitizenship' => $request->dualCitizenship,
+            'tribe' => $request->tribe,
+            'bloodType' => $request->bloodType
         ]);
        return $request->all();
     }
@@ -122,12 +134,14 @@ class UserController extends Controller
         $user->contacts = $request->contacts;
         $user->address = \strtoupper($request->address);
         $user->RFID= $request->RFID;
-        $user->height = $request->height;
+        $user->heightFeet = $request->heightFeet;
+        $user->heightIn = $request->heightIn;
         $user->weight = $request->weight;
         $user->religion = $request->religion;
         $user->nationality = $request->nationality;
         $user->dualCitizenship = $request->dualCitizenship;
         $user->tribe = $request->tribe;
+        $user->bloodType = $request->bloodType;
         $user->save();
         return ['message' => 'user ID: '.$id];
     }
@@ -140,6 +154,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted.'];

@@ -31,7 +31,7 @@ Vue.component(AlertSuccess.name, AlertSuccess);
 let routes = [
     {path: '/dashboard', component: require('./components/DashboardComponent.vue').default },
     {path: '/users', component: require('./components/UsersComponent.vue').default },
-    {path: '/applicants', component: require('./components/Applicants.vue').default },
+    {path: '/student-applicants', component: require('./components/StudentApplicants.vue').default },
     {path: '/student-portal', component: require('./components/StudentPortalComponent.vue').default },
     {path: '/user-profile', component: require('./components/UserProfile.vue').default },
     {path: '/payment-history', component: require('./components/PaymentHistory.vue').default }

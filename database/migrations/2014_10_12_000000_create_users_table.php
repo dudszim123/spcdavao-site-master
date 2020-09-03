@@ -34,7 +34,8 @@ class CreateUsersTable extends Migration
             $table->string('contacts')->nullable();
             $table->string('address')->nullable();
             $table->string('RFID')->nullable();
-            $table->string('height')->default('0|0');
+            $table->integer('heightFeet')->default(0);
+            $table->integer('heightIn')->default(0);
             $table->double('weight')->default(0);
             $table->string('religion')->default('Roman Catholic');
             $table->string('nationality')->default('Filipino');

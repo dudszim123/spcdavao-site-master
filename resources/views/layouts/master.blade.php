@@ -173,41 +173,7 @@
 								</p>
 							</router-link>
 						</li>
-						<li class="nav-item has-treeview">
-							<a href="#" class="nav-link">
-								<i class="nav-icon fas fa-users"></i>
-								<p>
-									Students
-									<i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<router-link to="/applicants" class="nav-link">
-										<i class="fas fa-dot-circle nav-icon"></i>
-										<p>Applicants</p>
-										<span class="badge badge-info right">6</span>
-									</router-link>
-								</li>
-								<li class="nav-item">									<a href="#" class="nav-link">
-									<i class="fas fa-dot-circle nav-icon"></i>
-									<p>Advanced Elements</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="fas fa-dot-circle nav-icon"></i>
-										<p>Editors</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="fas fa-dot-circle nav-icon"></i>
-										<p>Validation</p>
-									</a>
-								</li>
-							</ul>
-						</li>
+						@can('isAdmin')
 						<li class="nav-item">
 							<router-link to="/users" class="nav-link">
 							<i class="nav-icon fas fa-user-tie"></i>
@@ -216,59 +182,77 @@
 								</p>
 							</router-link>
 						</li>
-						<li class="nav-item">
-							<a href="#" class="nav-link">
-							<i class="nav-icon fas fa-image"></i>
-							<p>
-								Gallery
-							</p>
-							</a>
-						</li>
-						<li class="nav-item has-treeview">
-							<a href="#" class="nav-link">
-							<i class="nav-icon fas fa-book"></i>
-								<p>
-									Pages
-									<i class="fas fa-angle-left right"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="#" class="nav-link">
-										<i class="fas fa-dot-circle nav-icon"></i>
-										<p>Invoice</p>
-									</a>
-								</li>
-							</ul>
-						</li>
+						@endcan
 						<li class="nav-item">
 							<router-link to="/user-profile" class="nav-link">
 							<i class="nav-icon fas fa-id-card-alt"></i>
 								<p>
-									My Profile
+									Profile
 								</p>
 							</router-link>
 						</li>
+						@can('isStudent')
 						<li class="nav-item">
 							<router-link to="/payment-history" class="nav-link">
 							<i class="nav-icon fas fa-money-bill-wave"></i>
 								<p>
-									Payment History
+									Balance/Payment History
 								</p>
 							</router-link>
 						</li>
-						<!-- <li class="nav-item">
-							<a class="nav-link" href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-												document.getElementById('logout-form').submit();">
-								<i class="nav-icon fas fa-power-off"></i>
-								{{ __('Logout') }}
-							</a>
-
-							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-						</li> -->
+						<li class="nav-item">
+							<router-link to="/student-grade" class="nav-link">
+							<i class="nav-icon fas fa-medal"></i>
+								<p>
+									Grades
+								</p>
+							</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="/student-section" class="nav-link">
+							<i class="nav-icon fas fa-calendar-alt"></i>
+								<p>
+									Schedules
+								</p>
+							</router-link>
+						</li>
+						@endcan
+						@can('isRegistrar')
+						<li class="nav-item">
+							<router-link to="/student-applicants" class="nav-link">
+							<i class="nav-icon fas fa-user-check"></i>
+								<p>
+									Applicants
+								</p>
+							</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="/Program" class="nav-link">
+							<i class="nav-icon fas fa-book"></i>
+								<p>
+									Program
+								</p>
+							</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="/Curriculum" class="nav-link">
+							<i class="nav-icon fas fa-swatchbook"></i>
+								<p>
+									Curriculum
+								</p>
+							</router-link>
+						</li>
+						@endcan
+						@can('isHumanResource')
+						<li class="nav-item">
+							<router-link to="/Department" class="nav-link">
+							<i class="nav-icon fas fa-swatchbook"></i>
+								<p>
+									Department
+								</p>
+							</router-link>
+						</li>
+						@endcan
 						<li class="nav-item">
 							<a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
 								document.getElementById('logout-form').submit();">
@@ -281,6 +265,7 @@
 								@csrf
 							</form>
 						</li>
+					
 					</nav>
 					<!-- /.sidebar-menu -->
 				</div>

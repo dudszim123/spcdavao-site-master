@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">List of Users</h1>
+                        <h1 class="m-0 text-dark">Users</h1>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.container-fluid -->
@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     <label for="number">ID</label>
                                     <input v-model="form.number" type="text" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('number')}" name="number" id="number" placeholder="ID" :disabled="editMode">
+                                    :class="{ 'is-invalid': form.errors.has('number')}" name="number" id="number" placeholder="ID" :disabled="editMode" maxlength="9" minlength="9">
                                     <has-error :form="form" field="number"></has-error>
                                 </div>
                                 <div class="form-group">
@@ -140,10 +140,11 @@
                                     <select v-model="form.type" class="form-control" name="type" id="type" 
                                     :class="{ 'is-invalid': form.errors.has('type')}" >
                                         <option value="">Type</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="Student">Registrar</option>
-                                        <option value="Student">Admission</option>
-                                        <option value="Student">Human Resource</option>
+                                        <option value="Admin">Administrator</option>
+                                        <option value="Registrar">Registrar</option>
+                                        <option value="Admission">Admission</option>
+                                        <option value="Human Resource">Human Resource</option>
+                                        <option value="Guidance">Guidance</option>
                                         <option value="Student">Student</option>
                                     </select>
                                     <has-error :form="form" field="type"></has-error>
@@ -170,7 +171,7 @@
                                     <label for="password-confirm">Confirm Password</label>
                                     <input v-model="form.password_confirmation" type="password" name="password_confirmation" class="form-control" autocomplete="new-password"
                                     id="password_confirmation" placeholder="Confirm Password">
-                                    <has-error :form="form" field="password"></has-error>
+                                    <has-error :form="form" field="password-confirm"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group">
@@ -181,7 +182,7 @@
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
-                                        <has-error :form="form" field="contacts"></has-error>
+                                        <has-error :form="form" field="gender"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -195,7 +196,7 @@
                                             <option value="Separated">Separated</option>
                                             <option value="Widowed">Widowed</option>
                                         </select>
-                                        <has-error :form="form" field="contacts"></has-error>
+                                        <has-error :form="form" field="civilStatus"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -210,8 +211,94 @@
                                     :class="{ 'is-invalid': form.errors.has('RFID')}" id="RFID" placeholder="RD#">
                                     <has-error :form="form" field="RFID"></has-error>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                         <label for="heightFeet">Height - feet</label>
+                                        <input v-model="form.heightFeet" id="heightFeet" name="heightFeet" type="text" 
+                                        @keypress="onlyNumber" class="form-control" maxlength="1"
+                                        :class="{ 'is-invalid': form.errors.has('heightFeet')}">
+                                    </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="heightIn">in</label>
+                                        <input v-model="form.heightIn" id="heightIn" name="heightIn" type="text"
+                                        @keypress="onlyNumber" class="form-control" maxlength="1"
+                                        :class="{ 'is-invalid': form.errors.has('heightIn')}">
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight">Weight (kg)</label>
+                                    <input @keypress="onlyNumber" v-model="form.weight" type="text" name="weight" class="form-control" 
+                                    :class="{ 'is-invalid': form.errors.has('weight')}" id="weight" maxlength="3">
+                                    <has-error :form="form" field="weight"></has-error>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="religion">Religion</label>
+                                        <select v-model="form.religion" class="form-control" name="religion" id="religion"
+                                        :class="{ 'is-invalid': form.errors.has('religion')}" >
+                                            <option value="NONE">NONE</option>
+                                            <option value="Roman Catholic">Reman Catholic</option>
+                                            <option value="Islam">Islam</option>
+                                        </select>
+                                        <has-error :form="form" field="religion"></has-error>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    
+                                        <label for="nationality">Nationality</label>
+                                        <select v-model="form.nationality" class="form-control" name="nationality" id="nationality"
+                                        :class="{ 'is-invalid': form.errors.has('nationality')}" >
+                                            <option value="NONE">NONE</option>
+                                            <option value="Filipino">Filipino</option>
+                                            <option value="Indian">Indian</option>
+                                        </select>
+                                        <has-error :form="form" field="nationality"></has-error>
+                                   
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input v-model="form.dualCitizenship" type="checkbox" name="dualCitizenship" class="custom-control-input" id="dualCitizenship"
+                                        :class="{ 'is-invalid': form.errors.has('dualCitizenShip')}" >
+                                        <label class="custom-control-label" for="dualCitizenship">Dual Citizenship</label>
+                                        <has-error :form="form" field="dualCitizenship"></has-error>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="tribe">Ethnic Group</label>
+                                        <select v-model="form.tribe" class="form-control" name="tribe" id="tribe"
+                                        :class="{ 'is-invalid': form.errors.has('tribe')}" >
+                                            <option value="NONE">NONE</option>
+                                            <option value="Filipino">Lumad</option>
+                                            <option value="Indian">Ata</option>
+                                        </select>
+                                        <has-error :form="form" field="tribe"></has-error>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                               
+                                    <label for="bloodType">Blood Type</label>
+                                    <select v-model="form.bloodType" class="form-control" name="bloodType" id="bloodType"
+                                    :class="{ 'is-invalid': form.errors.has('bloodType')}" >
+                                        <option value="NONE">NONE</option>
+                                        <option value="O-positive">O-positive</option>
+                                        <option value="O-negative">O-negative</option>
+                                        <option value="A-positive">A-positive</option>
+                                        <option value="A-negative">A-negative</option>
+                                        <option value="B-positive">B-positive</option>
+                                        <option value="B-negativ">B-negativ</option>
+                                        <option value="AB-positive">AB-positive</option>
+                                        <option value="AB-negative">AB-negative</option>
+                                    </select>
+                                    <has-error :form="form" field="bloodType"></has-error>
+                                   
+                                </div>
                             </div>
-                       
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
@@ -240,7 +327,6 @@
                     email: '',
                     password: '',
                     type: '',
-                    active: '',
                     firstName: '',
                     lastName: '',
                     middleName: '',
@@ -252,7 +338,15 @@
                     address: '',
                     RFID: '',
                     activeUser: '',
-                    password_confirmation: ''
+                    password_confirmation: '',
+                    heightFeet: '0',
+                    heightIn: '0',
+                    weight: '0',
+                    religion: 'NONE',
+                    nationality: 'NONE',
+                    dualCitizenship: 'NONE',
+                    tribe: 'NONE',
+                    bloodType: 'NONE'
                 })
             }
         },
@@ -344,6 +438,13 @@
             setName(){
                 this.form.name = this.form.lastName+', '+this.form.firstName+' '+this.form.extensionName+' '+this.form.middleName;
             },
+            onlyNumber ($event) {
+            //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }
+            }
         },
         created(){
             this.$Progress.start();
