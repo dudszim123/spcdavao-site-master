@@ -70,8 +70,6 @@
                         <span class="tag tag-warning">PHP</span>
                         <span class="tag tag-primary">Node.js</span>
                     </p>
-
-                   
                 </div>
                 <!-- /.card-body -->
                 </div>

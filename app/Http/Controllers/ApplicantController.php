@@ -35,7 +35,30 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string|max:191',
+            'email' => 'required|email|max:191',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6',
+            'firstName' => 'string|max:191',
+            'lastName' => 'required|string|max:191',
+            'middleName' => 'string|max:191',
+            'extensionName' => 'string|max:191',
+            'gender' => 'required|string',
+            'birthdate' => 'required|date',
+            'address' => 'required|string|max:191',
+            'contact1' => 'required|numeric',
+            'program_id' => 'required',
+            'typeOfStudent' => 'required|string',
+            'civilStatus' => 'required|string',
+            'birthOrder' => 'required|string',
+            'heightFeet' => 'numeric',
+            'heightIn' => 'numeric',
+            'weight' => 'numeric',
+            'religion' => 'required|string',
+            'nationality' => 'required|string',
+        ]);
+        return $request;
     }
 
     /**

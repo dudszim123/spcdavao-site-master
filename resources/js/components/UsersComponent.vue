@@ -116,7 +116,7 @@
                                     :class="{ 'is-invalid': form.errors.has('middleName')}" id="middleName" placeholder="Middle Name" uppercase>
                                     <has-error :form="form" field="middleName"></has-error>
                                 </div>
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label>Extension Name</label>
                                     <select v-model="form.extensionName" @change="setName" class="form-control" name="extensionName" id="extensionName" 
                                     :class="{ 'is-invalid': form.errors.has('extensionName')}" >
@@ -237,28 +237,24 @@
                                     <has-error :form="form" field="weight"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    <div class="form-group">
-                                        <label for="religion">Religion</label>
-                                        <select v-model="form.religion" class="form-control" name="religion" id="religion"
-                                        :class="{ 'is-invalid': form.errors.has('religion')}" >
-                                            <option value="NONE">NONE</option>
-                                            <option value="Roman Catholic">Reman Catholic</option>
-                                            <option value="Islam">Islam</option>
-                                        </select>
-                                        <has-error :form="form" field="religion"></has-error>
-                                    </div>
+                                    <label for="religion">Religion</label>
+                                    <select v-model="form.religion" class="form-control" name="religion" id="religion"
+                                    :class="{ 'is-invalid': form.errors.has('religion')}" >
+                                        <option value="NONE">NONE</option>
+                                        <option value="Roman Catholic">Reman Catholic</option>
+                                        <option value="Islam">Islam</option>
+                                    </select>
+                                    <has-error :form="form" field="religion"></has-error>
                                 </div>
                                 <div class="form-group">
-                                    
-                                        <label for="nationality">Nationality</label>
-                                        <select v-model="form.nationality" class="form-control" name="nationality" id="nationality"
-                                        :class="{ 'is-invalid': form.errors.has('nationality')}" >
-                                            <option value="NONE">NONE</option>
-                                            <option value="Filipino">Filipino</option>
-                                            <option value="Indian">Indian</option>
-                                        </select>
-                                        <has-error :form="form" field="nationality"></has-error>
-                                   
+                                    <label for="nationality">Nationality</label>
+                                    <select v-model="form.nationality" class="form-control" name="nationality" id="nationality"
+                                    :class="{ 'is-invalid': form.errors.has('nationality')}" >
+                                        <option value="NONE">NONE</option>
+                                        <option value="Filipino">Filipino</option>
+                                        <option value="Indian">Indian</option>
+                                    </select>
+                                    <has-error :form="form" field="nationality"></has-error>
                                 </div>
                                 <div class="form-group">
                                     <div class="custom-control custom-switch">
@@ -281,7 +277,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                               
                                     <label for="bloodType">Blood Type</label>
                                     <select v-model="form.bloodType" class="form-control" name="bloodType" id="bloodType"
                                     :class="{ 'is-invalid': form.errors.has('bloodType')}" >
@@ -296,7 +291,6 @@
                                         <option value="AB-negative">AB-negative</option>
                                     </select>
                                     <has-error :form="form" field="bloodType"></has-error>
-                                   
                                 </div>
                             </div>
                         </div>
