@@ -23,6 +23,7 @@ class CreateProgramsTable extends Migration
             $table->tinyInteger('active')->default(1);
             $table->timestamps();
 
+            $table->tinyInteger('offer')->default(1);
             $table->foreign('department_id')->references('id')->on('departments');
             $table->index(['department_id', 'created_at']);
         });

@@ -443,10 +443,10 @@
         created(){
             this.$Progress.start();
             this.loadData();
-            this.$Progress.finish();
             Fire.$on('AfterCreate',()=>{
                 this.loadData();
             });
+            this.$Progress.finish();
         },
         mounted() {
         }

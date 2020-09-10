@@ -74,7 +74,7 @@ class UserController extends Controller
             'tribe' => $request->tribe,
             'bloodType' => $request->bloodType
         ]);
-       return $request->all();
+       //return $request->all();
     }
 
     /**

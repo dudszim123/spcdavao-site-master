@@ -29,6 +29,7 @@
         "chart.js": "^2.9.3",
         "moment": "^2.27.0",
         "sweetalert2": "^9.17.1",
+        "vee-validate": "^3.3.9",
         "vform": "^1.0.1",
         "vue-chartjs": "^3.5.0",
         "vue-good-wizard": "^1.4.1",
