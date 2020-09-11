@@ -3385,6 +3385,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 Vue.directive("uppercase", {
   update: function update(el) {
     el.value = el.value.toUpperCase();
@@ -3394,6 +3395,7 @@ Vue.directive("uppercase", {
   props: ['form'],
   data: function data() {
     return {
+      filePdfDetail: null,
       dataPrograms: {},
       gender: ['Male', 'Female'],
       extensionNameList: ['JR.', 'II', 'III', 'VI', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
@@ -3403,9 +3405,22 @@ Vue.directive("uppercase", {
     onSubmit: function onSubmit() {
       var _this = this;
 
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }; // this.filePdfDetail = this.$refs.file_file.files[0]
+      // let formData = new FormData();
+      // formData.append('shortEssay', this.filePdfDetail)
+      // this.form.shortEssay = this.$refs.file_file.files[0];
+      // this.form = Object.assign(this.form, formData);
+
+      console.log(this.form);
       this.$Progress.start();
-      this.form.put('/applicant').then(function () {
+      this.form.post('/applicant').then(function () {
         swal.fire('Thank you for Enrolling at San Pedro College', 'Your applicantion will process immediately.', 'success');
+
+        _this.uploadImage();
 
         _this.form.reset();
 
@@ -3427,33 +3442,39 @@ Vue.directive("uppercase", {
         return _this2.dataPrograms = data;
       });
     },
-    torSelect: function torSelect(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (e) {
-        vm.form.tor = e.target.result;
-      };
-
-      reader.readAsDataURL(files[0]);
-    },
+    // torSelect(event){
+    // 	let files = event.target.files || event.dataTransfer.files;
+    // 	if (!files.length)
+    // 		return;
+    // 	let reader = new FileReader();
+    // 	let vm = this;
+    // 	reader.onload = (e) => {
+    // 		vm.form.tor = e.target.result;
+    // 	};
+    // 	reader.readAsDataURL(files[0]);
+    // },
     prcSelect: function prcSelect(e) {
+      var _this3 = this;
+
+      console.log('prc');
       var files = e.target.files || e.dataTransfer.files;
+      console.log(files);
       if (!files.length) return;
-      var reader = new FileReader();
-      var vm = this;
+      var reader = new FileReader(); // let vm = this;
 
       reader.onload = function (e) {
-        vm.form.prcLicense = e.target.result;
+        _this3.form.prcLicense = e.target.result;
       };
 
+      console.log(this.form.prcLicense);
       reader.readAsDataURL(files[0]);
     },
     shortEssaySelect: function shortEssaySelect(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
+      this.createImage(files[0]);
+    },
+    createImage: function createImage(file) {
       var reader = new FileReader();
       var vm = this;
 
@@ -3461,20 +3482,47 @@ Vue.directive("uppercase", {
         vm.form.shortEssay = e.target.result;
       };
 
-      reader.readAsDataURL(files[0]);
+      reader.readAsDataURL(file);
     },
-    thesisDescriptionSelect: function thesisDescriptionSelect(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      var reader = new FileReader();
-      var vm = this;
-
-      reader.onload = function (e) {
-        vm.form.thesisDescription = e.target.result;
-      };
-
-      reader.readAsDataURL(files[0]);
+    uploadImage: function uploadImage() {
+      this.filePdfDetail = this.$refs.file_file.files[0];
+      var formData = new FormData();
+      formData.append('shortEssay', this.filePdfDetail);
+      console.log(formData);
+      axios.post('/short-essay', formData).then(function (response) {
+        if (response.data.success) {
+          alert(response.data.success);
+        }
+      });
     },
+    // shortEssaySelect(event){
+    // 	// console.log('shortEssay');
+    // 	// let files = event.target.files || event.dataTransfer.files;
+    // 	// console.log(files[0]);
+    // 	// console.log(files);
+    // 	// if (!files.length)
+    // 	// 	return;
+    // 	// let reader = new FileReader();
+    // 	// // let vm = this.form;
+    // 	// reader.onload = (e) => {
+    // 	// 	console.log(this.form.shortEssay);
+    // 	// 	this.form.shortEssay =  e.target.result;
+    // 	// 	console.log(this.form.shortEssay);
+    // 	// };
+    // 	// reader.readAsDataURL(files[0]);
+    // 	// console.log(this.form.shortEssay);
+    // },
+    // thesisDescriptionSelect(e){
+    // 	let files = e.target.files || e.dataTransfer.files;
+    // 	if (!files.length)
+    // 		return;
+    // 	let reader = new FileReader();
+    // 	let vm = this;
+    // 	reader.onload = (e) => {
+    // 		vm.form.thesisDescription = e.target.result;
+    // 	};
+    // 	reader.readAsDataURL(files[0]);
+    // },
     honorableDismissalSelect: function honorableDismissalSelect(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
@@ -72825,6 +72873,7 @@ var render = function() {
                 _c(
                   "form",
                   {
+                    attrs: { enctype: "multipart/form-data" },
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
@@ -73493,6 +73542,47 @@ var render = function() {
                     _vm._v(" "),
                     _c("ValidationProvider", {
                       attrs: {
+                        name: "PRC license",
+                        rules: "required|image|size:1000"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "PRC License (scanned copy or screen shot)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: { type: "file" },
+                                    on: { change: [validate, _vm.prcSelect] }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
                         name: "short essay",
                         rules: "required|ext:docx,doc,pdf|size:500"
                       },
@@ -73513,6 +73603,7 @@ var render = function() {
                                   _c("br"),
                                   _vm._v(" "),
                                   _c("input", {
+                                    ref: "file_file",
                                     attrs: { type: "file" },
                                     on: {
                                       change: [validate, _vm.shortEssaySelect]
@@ -73584,7 +73675,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("h5", { staticClass: "widget-user-desc text-top-left" }, [
             _vm._v(
-              "DATA PRIVACY STATEMENT. Information gathered through this document is only\n\t\t\t\t\t\tfor the school’s enrollment data File; it will not be used for other purposes without the consent of the student \n\t\t\t\t\t\tapplicant."
+              "DATA PRIVACY STATEMENT. Information gathered through this document is only\n\t\t\t\t\tfor the school’s enrollment data File; it will not be used for other purposes without the consent of the student \n\t\t\t\t\tapplicant."
             )
           ])
         ])

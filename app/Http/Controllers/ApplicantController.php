@@ -37,37 +37,21 @@ class ApplicantController extends Controller
    {
       // /home/spc-alvin/spcdavao-site-master/public/applicantsRequirement
       if($request->applicantType == 'Masters/Doctoral'){
+         // dd($request->file('shortEssay'));
          // if($request->tor){
          //    $torImage = 'tor_'.time().'.' . explode('/', explode(':', substr($request->tor, 0, strpos($request->tor, ';')))[1])[1];
-         //    \Image::make($request->tor)->save(public_path('img/applicants_requirements/').$torImage);
+         //    \Image::make($request->tor)->save(public_path('applicantsRequirement/img/').$torImage);
          //    $request->merge(['tor' => $torImage]);
          // }   
-         // if($request->prcLicense){
-         //    $prcLicenseImage = 'prc_'.time().'.' . explode('/', explode(':', substr($request->prcLicense, 0, strpos($request->prcLicense, ';')))[1])[1];
-         //    \Image::make($request->prcLicense)->save(public_path('img/applicants_requirements/').$prcLicenseImage);
-         //    $request->merge(['prcLicense' => $prcLicenseImage]);
-         // }
-         if($request->shortEssay){
-            // $files = $request->file('shortEssay');
-            // // $destinationPath = public_path('applicantsRequirement//'); // upload path
-            // $destinationPath = public_path('applicantsRequirement/docs/');
-            // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-            // $files->move($destinationPath, $shortEssayfile);
-           
-           
-             
-            
-
-            // $shortEssayImage = 'shortEssay_'.time().'.' . explode('/', explode(':', substr($request->shortEssay, 0, strpos($request->shortEssay, ';')))[1])[1];
-            // \Image::make($request->shortEssay)->save(public_path('applicantsRequirement/img/').$shortEssayImage);
-            // $request->merge(['shortEssay' => $shortEssayImage]);
-         }   
-         $files = $request->file('shortEssay');
-         $destinationPath = public_path('applicantsRequirement/docs/'); // upload path
-         $profilefile = date('YmdHis') . "." . $files->getClientOriginalExtension();
-         $files->move($destinationPath, $profilefile);
-         //$insert['shortEssay'] = "$profilefile";
-         
+         if($request->prcLicense){
+            $prcLicenseImage = 'prc_'.time().'.' . explode('/', explode(':', substr($request->prcLicense, 0, strpos($request->prcLicense, ';')))[1])[1];
+            \Image::make($request->prcLicense)->save(public_path('applicantsRequirement/img/').$prcLicenseImage);
+            $request->merge(['prcLicense' => $prcLicenseImage]);
+         }
+         // $files = $request->file('shortEssay');
+         // $destinationPath = public_path('applicantsRequirement/docs/');
+         // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+         // $files->move($destinationPath, $shortEssayfile);
          // if($request->thesisDescription){
          //    $thesisDescriptionImage = 'thesisDescription_'.time().'.' . explode('/', explode(':', substr($request->thesisDescription, 0, strpos($request->thesisDescription, ';')))[1])[1];
          //    \Image::make($request->thesisDescription)->save(public_path('img/applicants_requirements/').$thesisDescriptionImage);
@@ -122,15 +106,21 @@ class ApplicantController extends Controller
             ]);
       }else{
          return response()->json([
-            'error' => 'Database Error!'], 500);
+            'error' => 'Database Error!!!!'], 500);
       }
       return response()->json([
          'error' => 'Error Responce'], 400);
    }
-   private function ImageConvertTo64Bit(){
 
+   public function shortEssayStore(Request $request)
+   {
+      $files = $request->file('shortEssay');
+      $destinationPath = public_path('applicantsRequirement/docs/');
+      $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+      $files->move($destinationPath, $shortEssayfile);
+  
+      return $request;
    }
-
    /**
     * Display the specified resource.
     *

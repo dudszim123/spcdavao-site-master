@@ -8,8 +8,11 @@
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 		<link href="{{ asset('/img/San_Pedro_College_logo.png') }}" rel="icon">
 		<link href="{{ asset('/img/San_Pedro_College_logo.png') }}" rel="apple-touch-icon">
+		 <!-- summernote -->
+		 <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.css">
 		 <!-- Theme style -->
 		<link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css') }}">
+		
 		<!-- Vue link -->
 		<link rel="stylesheet" href="/css/app.css">
 	</head>
@@ -191,7 +194,7 @@
 		<script src="{{ asset('../plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 		<!-- Vue script -->
 		<script src="/js/app.js"></script>
-	
-
+		<script>
+		</script>
 	</body>
 </html>
