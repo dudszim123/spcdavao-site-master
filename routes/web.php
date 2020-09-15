@@ -27,3 +27,4 @@ Route::get('/offered-program', 'ProgramController@selectAllOfferedProgram');
 Route::get('{path}','HomeController@index')->where('path','([A-z\d\-\/_.]+)?');
 
 Route::post('/short-essay','ApplicantController@shortEssayStore');
+Route::post('/thesis-description','ApplicantController@thesisDescriptionStore');

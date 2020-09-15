@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Applicant;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Applicant;
 
 class ApplicantController extends Controller
 {
@@ -43,11 +45,7 @@ class ApplicantController extends Controller
          //    \Image::make($request->tor)->save(public_path('applicantsRequirement/img/').$torImage);
          //    $request->merge(['tor' => $torImage]);
          // }   
-         if($request->prcLicense){
-            $prcLicenseImage = 'prc_'.time().'.' . explode('/', explode(':', substr($request->prcLicense, 0, strpos($request->prcLicense, ';')))[1])[1];
-            \Image::make($request->prcLicense)->save(public_path('applicantsRequirement/img/').$prcLicenseImage);
-            $request->merge(['prcLicense' => $prcLicenseImage]);
-         }
+        
          // $files = $request->file('shortEssay');
          // $destinationPath = public_path('applicantsRequirement/docs/');
          // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
@@ -77,7 +75,21 @@ class ApplicantController extends Controller
          //    \Image::make($request->paymentReceipt)->save(public_path('img/applicants_requirements/').$paymentReceiptImage);
          //    $request->merge(['paymentReceipt' => $paymentReceiptImage]);
          // }  
-         Applicant::create([
+         
+         $this->validate($request,[
+            'firstName' => 'required|string|max:191',
+            'middleName' => 'max:191',
+            'lastName' => 'max:191',
+            'email' => 'required|string|email|max:191|unique:applicants',
+            'password' => 'sometimes|min:6|confirmed|required_with:password_confirmed',
+            // 'confirm_password' => 'min:6',
+            'contact1' => 'required|max:64',
+            'program_id' => 'required|numeric',
+            'gender' => 'required|string',
+            // 'prcLicense' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
+         ]);
+        
+         $applicant = Applicant::create([
             'name' => $request->lastName.', '.$request->firstName.' '.$request->extensionName.' '.$request->middleName,
             'email' => $request->email,
             'password' => $request->password,
@@ -90,36 +102,64 @@ class ApplicantController extends Controller
             'gender' => $request->gender,
             'applicantType' => $request->applicantType,
             'typeOfStudent' => 'New',
-            //'tor' => $torImage,
-            //'prcLicense' => $prcLicenseImage,
-            //'shortEssay' => 'test',
-            // 'thesisDescription' => $thesisDescriptionImage,
-            // 'honorableDismissal' => $honorableDismissalImage,
-            // 'birthCertificate' => $birthCertificateImage,
-            // 'marriedContract' => $marriedContractImage,
-            // 'paymentReceipt' => $paymentReceiptImage
          ]);   
-         return response()->json(
-            [
-               'success' => true,
-               'message' => 'User registered successfully'
-            ]);
-      }else{
-         return response()->json([
-            'error' => 'Database Error!!!!'], 500);
       }
-      return response()->json([
-         'error' => 'Error Responce'], 400);
+      return response()->json($applicant);
    }
 
+   
    public function shortEssayStore(Request $request)
    {
-      $files = $request->file('shortEssay');
+      // dd($request->prcLicense);
+      $this->validate($request,[
+         // 'shortEssay.*' => 'required|file|max:1000|mimes:pdf,docx,doc',
+         // 'thesisDescription' => 'required|file|max:1000|mimes:pdf,docx,doc',
+         'prcLicense' => 'required|mimes:jpeg,jpg,png|max:1000',
+      ]);
+
+      if($request->prcLicense){
+         // $prcLicenseImage = 'prcLicense_'.time().'.' . explode('/', explode(':', substr($request->prcLicense, 0, strpos($request->prcLicense, ';')))[1])[1];
+         // \Image::make($request->prcLicense)->save(public_path('applicantsRequirement/img/').$prcLicenseImage);
+         // $request->merge(['prcLicense' => $prcLicenseImage]);
+         $files = $request->file('prcLicense');
+         $destinationPath = public_path('applicantsRequirement/img/');
+         $prcLicensefile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+         $files->move($destinationPath, $prcLicensefile);
+      }  
+     
+
+      // $files = $request->file('shortEssay');
+      // $destinationPath = public_path('applicantsRequirement/docs/');
+      // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+      // $files->move($destinationPath, $shortEssayfile);
+
+
+      // $files = $request->file('thesisDescription');
+      // $destinationPath = public_path('applicantsRequirement/docs/');
+      // $thesisDescriptionfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+      // $files->move($destinationPath, $thesisDescriptionfile);
+
+      $applicant = Applicant::findOrFail($request->id);
+
+      $applicant->prcLicense = $prcLicensefile;
+      //$applicant->shortEssay = $destinationPath;
+      //$applicant->thesisDescription = $thesisDescriptionfile;
+
+      $applicant->save();
+
+      return ['message' => 'Success Data'];
+   }
+   public function thesisDescriptionStore(Request $request)
+   {
+      $validator = Validator::make($request->all(), [
+         'thesisDescription.*' => 'required|file|max:5000|mimes:pdf,docx,doc'
+      ]);
+    
+      $files = $request->file('thesisDescription');
       $destinationPath = public_path('applicantsRequirement/docs/');
-      $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-      $files->move($destinationPath, $shortEssayfile);
-  
-      return $request;
+      $thesisDescriptionfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
+      $files->move($destinationPath, $thesisDescriptionfile);
+      return ['data_name' => $thesisDescriptionfile];
    }
    /**
     * Display the specified resource.

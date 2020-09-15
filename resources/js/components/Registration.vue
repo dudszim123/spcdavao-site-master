@@ -62,7 +62,6 @@ img{
                                     <div v-show="form.applicantType == 'Masters/Doctoral'">   
                                         <masteral-form :form="form"></masteral-form>
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>
