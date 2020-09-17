@@ -16,7 +16,7 @@
 			<alert-errors :form="form" message="There were some problems with your input."></alert-errors>
 		</div>
 		<ValidationObserver v-slot="{ handleSubmit }">
-		<form @submit.prevent="handleSubmit(onSubmit)" @keydown="form.onKeydown($event)" enctype="multipart/form-data">
+		<form @submit.prevent="handleSubmit(onSubmit)" ref="ref_form" @keydown="form.onKeydown($event)" enctype="multipart/form-data">
 			<div class="form-group">
 				<label>Last Name</label>
 				<input type="text" class="form-control" v-model="form.lastName" v-uppercase
@@ -88,17 +88,62 @@
 				</div>
 				<p>Please make sure you entered an active email address. </p>
 			</div>
-			<ValidationProvider name="PRC License" rules="required|image|size:1000" v-slot="{ errors, validate }">
-			<div class="form-group">
-				<label>PRC License (scanned copy or screen shot)</label><br>
-				<input ref="ref_prcLicense" type="file" @change="validate">
-				<span class="text-danger">{{ errors[0] }}</span>
-			</div>
+			<ValidationProvider name="transcript of record" rules="required|image|size:1000" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>Transcrip of Records (scanned copy or screen shot)</label><br>
+					<input ref="ref_tor" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
 			</ValidationProvider>
-			<div class="form-group">
-				<label>Short Essay on your personal goals (docx,doc,pdf)</label><br>
-				<input ref="ref_shortEssay" type="file">
-			</div>
+			<ValidationProvider name="PRC License" rules="required|image|size:1000" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>PRC License (scanned copy or screen shot)</label><br>
+					<input ref="ref_prcLicense" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
+			<ValidationProvider name="short essay" rules="required|ext:docx,doc,pdf|size:500" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>Short Essay on your personal goals (docx,doc,pdf)</label><br>
+					<input ref="ref_shortEssay" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
+				<ValidationProvider name="thesis/dissertation" rules="required|ext:docx,doc,pdf|size:500" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>Description or direction of your thesis/dissertation (docx,doc,pdf)</label><br>
+					<input ref="ref_thesisDescription" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
+			<ValidationProvider name="honorable dismissal" rules="required|image|size:1000" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>Honorable Dismissal (scanned copy or screen shot)</label><br>
+					<input ref="ref_honorableDismissal" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
+			<ValidationProvider name="birth certificate" rules="required|image|size:1000" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>PSA copy of the birth certificate (scanned copy or screen shot)</label><br>
+					<input ref="ref_birthCertificate" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
+			<ValidationProvider name="marriage contract" rules="image|size:1000" v-slot="{ errors, validate }">
+				<div class="form-group">
+					<label>PSA copy of the marriage contract for married only (scanned copy or screen shot)</label><br>
+					<input ref="ref_marriedContract" type="file" @change="validate">
+					<br>
+					<span class="text-danger">{{ errors[0] }}</span>
+				</div>
+			</ValidationProvider>
 			<div class="modal-footer justify-content">
 				<button type="submit" class="btn btn-primary">Submit <i class="fas fa-save"></i></button>
 			</div>
@@ -151,62 +196,44 @@ export default {
 				);
 				this.data = response.data;
 				this.$Progress.finish();
-				console.log(this.data);
-				this.uploadShortEssay(this.data.id);
+				this.uploadData(this.data.id);
+				this.form.reset();
+				this.$refs.ref_form.reset();
 			}).catch(error => {
 				this.$Progress.fail();
 			});
 		},
-		uploadShortEssay(id){
-			console.log('uploadShortEssay '+id);
-			//let shortEssay = this.$refs.ref_shortEssay.files[0]
-			let prcLicense = this.$refs.ref_prcLicense.files[0]
+		uploadData(id){
+			// console.log('uploadShortEssay '+id);
+			let tor = this.$refs.ref_tor.files[0];
+			let prcLicense = this.$refs.ref_prcLicense.files[0];
+			let shortEssay = this.$refs.ref_shortEssay.files[0];
+			let thesisDescription = this.$refs.ref_thesisDescription.files[0];
+			let honorableDismissal = this.$refs.ref_honorableDismissal.files[0];
+			let birthCertificate = this.$refs.ref_birthCertificate.files[0];
+			let marriedContract = this.$refs.ref_marriedContract.files[0];
+			
 			console.log(prcLicense);
 			let formData = new FormData();
 			formData.append('id',id);
-			//formData.append('shortEssay', shortEssay)
-			formData.append('prcLicense', prcLicense)
-			//formData.append('thesisDescription', this.filePdfDetail)
+			formData.append('tor', tor);
+			formData.append('prcLicense', prcLicense);
+			formData.append('shortEssay', shortEssay);
+			formData.append('thesisDescription', thesisDescription);
+			formData.append('honorableDismissal', honorableDismissal);
+			formData.append('birthCertificate', birthCertificate);
+			formData.append('marriedContract', marriedContract);
 			axios.post('/short-essay', formData).then(response => {
 				if (response.data.success) {
 					console.log(response.data);
 					this.okApplication = true;
+					
 				}
 			})
 			.catch(error => {
 				this.okApplication = false;
 			});
 		},
-		uploadthesisDescription(){
-			this.filePdfDetail = this.$refs.ref_shortEssay.files[0]
-     	 	let formData = new FormData();
-			formData.append('thesisDescription', this.filePdfDetail)
-			axios.post('/thesis-description', formData).then(response => {
-				if (response.data.success) {
-					console.log(response.data);
-					this.form.thesisDescription = response.data.data_name;
-					console.log(this.form.thesisDescription);
-					this.okApplication = true;
-				}
-			})
-			.catch(error => {
-				this.okApplication = false;
-			});
-		},
-		prcLicenseSelect(event){
-			let files = event.target.files || event.dataTransfer.files;
-			if (!files.length) return;
-			let reader = new FileReader();
-			reader.onload = (e) => { this.form.prcLicense = e.target.result; };
-			reader.readAsDataURL(files[0]);
-		},
-		// prcLicenseSelect(event){
-		// 	let files = event.target.files || event.dataTransfer.files;
-		// 	if (!files.length) return;
-		// 	let reader = new FileReader();
-		// 	reader.onload = (e) => { this.form.prcLicense = e.target.result; };
-		// 	reader.readAsDataURL(files[0]);
-		// },
 		loadPrograms(){
 			axios.get('/offered-program').then(({data}) => (this.dataPrograms = data));
 		},

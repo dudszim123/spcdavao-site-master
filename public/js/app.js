@@ -3320,6 +3320,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 Vue.directive("uppercase", {
   update: function update(el) {
     el.value = el.value.toUpperCase();
@@ -3349,25 +3394,36 @@ Vue.directive("uppercase", {
 
         _this.$Progress.finish();
 
-        console.log(_this.data);
+        _this.uploadData(_this.data.id);
 
-        _this.uploadShortEssay(_this.data.id);
+        _this.form.reset();
+
+        _this.$refs.ref_form.reset();
       })["catch"](function (error) {
         _this.$Progress.fail();
       });
     },
-    uploadShortEssay: function uploadShortEssay(id) {
+    uploadData: function uploadData(id) {
       var _this2 = this;
 
-      console.log('uploadShortEssay ' + id); //let shortEssay = this.$refs.ref_shortEssay.files[0]
-
+      // console.log('uploadShortEssay '+id);
+      var tor = this.$refs.ref_tor.files[0];
       var prcLicense = this.$refs.ref_prcLicense.files[0];
+      var shortEssay = this.$refs.ref_shortEssay.files[0];
+      var thesisDescription = this.$refs.ref_thesisDescription.files[0];
+      var honorableDismissal = this.$refs.ref_honorableDismissal.files[0];
+      var birthCertificate = this.$refs.ref_birthCertificate.files[0];
+      var marriedContract = this.$refs.ref_marriedContract.files[0];
       console.log(prcLicense);
       var formData = new FormData();
-      formData.append('id', id); //formData.append('shortEssay', shortEssay)
-
-      formData.append('prcLicense', prcLicense); //formData.append('thesisDescription', this.filePdfDetail)
-
+      formData.append('id', id);
+      formData.append('tor', tor);
+      formData.append('prcLicense', prcLicense);
+      formData.append('shortEssay', shortEssay);
+      formData.append('thesisDescription', thesisDescription);
+      formData.append('honorableDismissal', honorableDismissal);
+      formData.append('birthCertificate', birthCertificate);
+      formData.append('marriedContract', marriedContract);
       axios.post('/short-essay', formData).then(function (response) {
         if (response.data.success) {
           console.log(response.data);
@@ -3377,49 +3433,12 @@ Vue.directive("uppercase", {
         _this2.okApplication = false;
       });
     },
-    uploadthesisDescription: function uploadthesisDescription() {
-      var _this3 = this;
-
-      this.filePdfDetail = this.$refs.ref_shortEssay.files[0];
-      var formData = new FormData();
-      formData.append('thesisDescription', this.filePdfDetail);
-      axios.post('/thesis-description', formData).then(function (response) {
-        if (response.data.success) {
-          console.log(response.data);
-          _this3.form.thesisDescription = response.data.data_name;
-          console.log(_this3.form.thesisDescription);
-          _this3.okApplication = true;
-        }
-      })["catch"](function (error) {
-        _this3.okApplication = false;
-      });
-    },
-    prcLicenseSelect: function prcLicenseSelect(event) {
-      var _this4 = this;
-
-      var files = event.target.files || event.dataTransfer.files;
-      if (!files.length) return;
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        _this4.form.prcLicense = e.target.result;
-      };
-
-      reader.readAsDataURL(files[0]);
-    },
-    // prcLicenseSelect(event){
-    // 	let files = event.target.files || event.dataTransfer.files;
-    // 	if (!files.length) return;
-    // 	let reader = new FileReader();
-    // 	reader.onload = (e) => { this.form.prcLicense = e.target.result; };
-    // 	reader.readAsDataURL(files[0]);
-    // },
     loadPrograms: function loadPrograms() {
-      var _this5 = this;
+      var _this3 = this;
 
       axios.get('/offered-program').then(function (_ref) {
         var data = _ref.data;
-        return _this5.dataPrograms = data;
+        return _this3.dataPrograms = data;
       });
     }
   },
@@ -72738,6 +72757,7 @@ var render = function() {
                 _c(
                   "form",
                   {
+                    ref: "ref_form",
                     attrs: { enctype: "multipart/form-data" },
                     on: {
                       submit: function($event) {
@@ -73251,6 +73271,48 @@ var render = function() {
                     _vm._v(" "),
                     _c("ValidationProvider", {
                       attrs: {
+                        name: "transcript of record",
+                        rules: "required|image|size:1000"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "Transcrip of Records (scanned copy or screen shot)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_tor",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
                         name: "PRC License",
                         rules: "required|image|size:1000"
                       },
@@ -73276,6 +73338,8 @@ var render = function() {
                                     on: { change: validate }
                                   }),
                                   _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
                                   _c("span", { staticClass: "text-danger" }, [
                                     _vm._v(_vm._s(errors[0]))
                                   ])
@@ -73289,19 +73353,215 @@ var render = function() {
                       )
                     }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [
-                        _vm._v(
-                          "Short Essay on your personal goals (docx,doc,pdf)"
-                        )
-                      ]),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("input", {
-                        ref: "ref_shortEssay",
-                        attrs: { type: "file" }
-                      })
-                    ]),
+                    _c("ValidationProvider", {
+                      attrs: {
+                        name: "short essay",
+                        rules: "required|ext:docx,doc,pdf|size:500"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "Short Essay on your personal goals (docx,doc,pdf)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_shortEssay",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
+                        name: "thesis/dissertation",
+                        rules: "required|ext:docx,doc,pdf|size:500"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "Description or direction of your thesis/dissertation (docx,doc,pdf)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_thesisDescription",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
+                        name: "honorable dismissal",
+                        rules: "required|image|size:1000"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "Honorable Dismissal (scanned copy or screen shot)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_honorableDismissal",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
+                        name: "birth certificate",
+                        rules: "required|image|size:1000"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "PSA copy of the birth certificate (scanned copy or screen shot)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_birthCertificate",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("ValidationProvider", {
+                      attrs: {
+                        name: "marriage contract",
+                        rules: "image|size:1000"
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var errors = ref.errors
+                              var validate = ref.validate
+                              return [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      "PSA copy of the marriage contract for married only (scanned copy or screen shot)"
+                                    )
+                                  ]),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    ref: "ref_marriedContract",
+                                    attrs: { type: "file" },
+                                    on: { change: validate }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v(_vm._s(errors[0]))
+                                  ])
+                                ])
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    }),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer justify-content" }, [
                       _c(

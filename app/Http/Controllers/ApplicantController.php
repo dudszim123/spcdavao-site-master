@@ -112,39 +112,66 @@ class ApplicantController extends Controller
    {
       // dd($request->prcLicense);
       $this->validate($request,[
-         // 'shortEssay.*' => 'required|file|max:1000|mimes:pdf,docx,doc',
-         // 'thesisDescription' => 'required|file|max:1000|mimes:pdf,docx,doc',
-         'prcLicense' => 'required|mimes:jpeg,jpg,png|max:1000',
+         'tor' => 'required|image|mimes:jpeg,jpg,png|max:1000',
+         'prcLicense' => 'required|image|mimes:jpeg,jpg,png|max:1000',
+         'shortEssay.*' => 'required|file|max:1000|mimes:pdf,docx,doc',
+         'thesisDescription.*' => 'required|file|max:1000|mimes:pdf,docx,doc',
+         'honorableDismissal' => 'required|image|mimes:jpeg,jpg,png|max:1000',
+         'birthCertificate' => 'required|image|mimes:jpeg,jpg,png|max:1000',
       ]);
 
-      if($request->prcLicense){
-         // $prcLicenseImage = 'prcLicense_'.time().'.' . explode('/', explode(':', substr($request->prcLicense, 0, strpos($request->prcLicense, ';')))[1])[1];
-         // \Image::make($request->prcLicense)->save(public_path('applicantsRequirement/img/').$prcLicenseImage);
-         // $request->merge(['prcLicense' => $prcLicenseImage]);
-         $files = $request->file('prcLicense');
-         $destinationPath = public_path('applicantsRequirement/img/');
-         $prcLicensefile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-         $files->move($destinationPath, $prcLicensefile);
+      if($request->tor){
+         $filestor = $request->file('tor');
+         $dtorDestinationPath = public_path('applicantsRequirement/img/');
+         $torfile = 'tor_'.date('YmdHis'). "." . $filestor->getClientOriginalExtension();
+         $filestor->move($dtorDestinationPath, $torfile);
       }  
-     
-
-      // $files = $request->file('shortEssay');
-      // $destinationPath = public_path('applicantsRequirement/docs/');
-      // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-      // $files->move($destinationPath, $shortEssayfile);
-
-
-      // $files = $request->file('thesisDescription');
-      // $destinationPath = public_path('applicantsRequirement/docs/');
-      // $thesisDescriptionfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-      // $files->move($destinationPath, $thesisDescriptionfile);
+      if($request->prcLicense){
+         $filesprcLicense = $request->file('prcLicense');
+         $destinationPath = public_path('applicantsRequirement/img/');
+         $prcLicensefile = 'prcLicense_'.date('YmdHis'). "." . $filesprcLicense->getClientOriginalExtension();
+         $filesprcLicense->move($destinationPath, $prcLicensefile);
+      }  
+      if ($request->shortEssay){
+         $filesshortEssay = $request->file('shortEssay');
+         $destinationPath = public_path('applicantsRequirement/docs/');
+         $shortEssayfile = 'shortEssay_'.date('YmdHis'). "." . $filesshortEssay->getClientOriginalExtension();
+         $filesshortEssay->move($destinationPath, $shortEssayfile);
+      }
+      if ($request->thesisDescription){
+         $filesthesisDescription = $request->file('thesisDescription');
+         $thesisDescriptionDestinationPath = public_path('applicantsRequirement/docs/');
+         $thesisDescriptionfile = 'thesisDescription_'.date('YmdHis'). "." . $filesthesisDescription->getClientOriginalExtension();
+         $filesthesisDescription->move($thesisDescriptionDestinationPath, $thesisDescriptionfile);
+      }
+      if($request->honorableDismissal){
+         $fileshonorableDismissal = $request->file('honorableDismissal');
+         $honorableDismissalDestinationPath = public_path('applicantsRequirement/img/');
+         $honorableDismissalfile = 'honorableDismissal_'.date('YmdHis'). "." . $fileshonorableDismissal->getClientOriginalExtension();
+         $fileshonorableDismissal->move($honorableDismissalDestinationPath, $honorableDismissalfile);
+      }  
+      if($request->birthCertificate){
+         $filesbirthCertificate = $request->file('birthCertificate');
+         $birthCertificateDestinationPath = public_path('applicantsRequirement/img/');
+         $birthCertificatefile = 'birthCertificate_'.date('YmdHis'). "." . $filesbirthCertificate->getClientOriginalExtension();
+         $filesbirthCertificate->move($birthCertificateDestinationPath, $birthCertificatefile);
+      }  
+      if($request->marriedContract){
+         $filesmarriedContract = $request->file('marriedContract');
+         $marriedContractDestinationPath = public_path('applicantsRequirement/img/');
+         $marriedContractfile = 'marriedContract_'.date('YmdHis'). "." . $filesmarriedContract->getClientOriginalExtension();
+         $filesmarriedContract->move($marriedContractDestinationPath, $marriedContractfile);
+      }  
 
       $applicant = Applicant::findOrFail($request->id);
 
+      $applicant->tor = $torfile;
       $applicant->prcLicense = $prcLicensefile;
-      //$applicant->shortEssay = $destinationPath;
-      //$applicant->thesisDescription = $thesisDescriptionfile;
-
+      $applicant->shortEssay = $shortEssayfile;
+      $applicant->thesisDescription = $thesisDescriptionfile;
+      $applicant->honorableDismissal = $honorableDismissalfile;
+      $applicant->birthCertificate = $birthCertificatefile;
+      $applicant->marriedContract = $marriedContractfile == '' ? '' : $marriedContractfile;
       $applicant->save();
 
       return ['message' => 'Success Data'];
