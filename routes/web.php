@@ -22,7 +22,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/applicant', 'ApplicantController@index')->name('applicant');
+Route::get('/thank-you','ApplicantController@thankYou')->name('thank-you');
 Route::post('/applicant','ApplicantController@store');
+
 Route::get('/offered-program', 'ProgramController@selectAllOfferedProgram');
 Route::get('{path}','HomeController@index')->where('path','([A-z\d\-\/_.]+)?');
 

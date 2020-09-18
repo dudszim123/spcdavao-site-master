@@ -39,7 +39,7 @@ class LoginController extends Controller
     }
 
     protected function credentials(Request $request) {
-        return array_merge($request->only($this->username(), 'password'), ['activeUser' => 1]);
+        return array_merge($request->only($this->username(), 'password'), ['active' => 1]);
     }
     
     protected function sendFailedLoginResponse(Request $request)

@@ -4,7 +4,7 @@
   bottom: 8px;
   left: 16px;
   font-size: 40px;
-  color: rgb(21, 31, 70);
+  color: rgb(255, 255, 255);
   font-weight: bolder;
 }
 .card-primary{
@@ -16,12 +16,12 @@
 img{ 
     height: 350px;
     background-size: cover;
-    opacity: 0.5;
+    /* opacity: 0.5; */
 }  
 .spc-logo{
     height: auto;
     width: 55px;
-     opacity: 1;
+    opacity: 1;
 }
 .form-group.required .control-label:after {
   content:"*";
@@ -58,6 +58,9 @@ img{
                                             <option value="Masters/Doctoral">Masters/Doctoral</option>
                                             <!-- <option value="Doctorate" disabled>Doctorate</option> -->
                                         </select>
+                                    </div>
+                                    <div v-show="form.applicantType == ''">   
+                                        <welcome-applicant></welcome-applicant>
                                     </div>
                                     <div v-show="form.applicantType == 'Masters/Doctoral'">   
                                         <masteral-form :form="form"></masteral-form>

@@ -28,7 +28,10 @@ class ApplicantController extends Controller
    {
       //
    }
-
+   public function thankYou()
+   {
+      return view('applicant.thank');
+   }
    /**
     * Store a newly created resource in storage.
     *
@@ -37,58 +40,17 @@ class ApplicantController extends Controller
     */
    public function store(Request $request)
    {
-      // /home/spc-alvin/spcdavao-site-master/public/applicantsRequirement
       if($request->applicantType == 'Masters/Doctoral'){
-         // dd($request->file('shortEssay'));
-         // if($request->tor){
-         //    $torImage = 'tor_'.time().'.' . explode('/', explode(':', substr($request->tor, 0, strpos($request->tor, ';')))[1])[1];
-         //    \Image::make($request->tor)->save(public_path('applicantsRequirement/img/').$torImage);
-         //    $request->merge(['tor' => $torImage]);
-         // }   
-        
-         // $files = $request->file('shortEssay');
-         // $destinationPath = public_path('applicantsRequirement/docs/');
-         // $shortEssayfile = date('YmdHis'). "." . $files->getClientOriginalExtension();
-         // $files->move($destinationPath, $shortEssayfile);
-         // if($request->thesisDescription){
-         //    $thesisDescriptionImage = 'thesisDescription_'.time().'.' . explode('/', explode(':', substr($request->thesisDescription, 0, strpos($request->thesisDescription, ';')))[1])[1];
-         //    \Image::make($request->thesisDescription)->save(public_path('img/applicants_requirements/').$thesisDescriptionImage);
-         //    $request->merge(['thesisDescription' => $thesisDescriptionImage]);
-         // }   
-         // if($request->honorableDismissal){
-         //    $honorableDismissalImage = 'honorableDismissal_'.time().'.' . explode('/', explode(':', substr($request->honorableDismissal, 0, strpos($request->honorableDismissal, ';')))[1])[1];
-         //    \Image::make($request->honorableDismissal)->save(public_path('img/applicants_requirements/').$honorableDismissalImage);
-         //    $request->merge(['honorableDismissal' => $honorableDismissalImage]);
-         // }   
-         // if($request->birthCertificate){
-         //    $birthCertificateImage = 'birthCertificate_'.time().'.' . explode('/', explode(':', substr($request->birthCertificate, 0, strpos($request->birthCertificate, ';')))[1])[1];
-         //    \Image::make($request->birthCertificate)->save(public_path('img/applicants_requirements/').$birthCertificateImage);
-         //    $request->merge(['birthCertificate' => $birthCertificateImage]);
-         // }  
-         // if($request->marriedContract){
-         //    $marriedContractImage = 'honorableDismissal_'.time().'.' . explode('/', explode(':', substr($request->marriedContract, 0, strpos($request->marriedContract, ';')))[1])[1];
-         //    \Image::make($request->marriedContract)->save(public_path('img/applicants_requirements/').$marriedContractImage);
-         //    $request->merge(['marriedContract' => $marriedContractImage]);
-         // }  
-         // if($request->paymentReceipt){
-         //    $paymentReceiptImage = 'paymentReceipt_'.time().'.' . explode('/', explode(':', substr($request->paymentReceipt, 0, strpos($request->paymentReceipt, ';')))[1])[1];
-         //    \Image::make($request->paymentReceipt)->save(public_path('img/applicants_requirements/').$paymentReceiptImage);
-         //    $request->merge(['paymentReceipt' => $paymentReceiptImage]);
-         // }  
-         
          $this->validate($request,[
             'firstName' => 'required|string|max:191',
             'middleName' => 'max:191',
             'lastName' => 'max:191',
             'email' => 'required|string|email|max:191|unique:applicants',
             'password' => 'sometimes|min:6|confirmed|required_with:password_confirmed',
-            // 'confirm_password' => 'min:6',
             'contact1' => 'required|max:64',
             'program_id' => 'required|numeric',
             'gender' => 'required|string',
-            // 'prcLicense' => 'required|image|mimes:jpeg,jpg,png,gif|max:5000',
          ]);
-        
          $applicant = Applicant::create([
             'name' => $request->lastName.', '.$request->firstName.' '.$request->extensionName.' '.$request->middleName,
             'email' => $request->email,
@@ -110,7 +72,6 @@ class ApplicantController extends Controller
    
    public function shortEssayStore(Request $request)
    {
-      // dd($request->prcLicense);
       $this->validate($request,[
          'tor' => 'required|image|mimes:jpeg,jpg,png|max:1000',
          'prcLicense' => 'required|image|mimes:jpeg,jpg,png|max:1000',
@@ -164,7 +125,6 @@ class ApplicantController extends Controller
       }  
 
       $applicant = Applicant::findOrFail($request->id);
-
       $applicant->tor = $torfile;
       $applicant->prcLicense = $prcLicensefile;
       $applicant->shortEssay = $shortEssayfile;
@@ -173,7 +133,6 @@ class ApplicantController extends Controller
       $applicant->birthCertificate = $birthCertificatefile;
       $applicant->marriedContract = $marriedContractfile == '' ? '' : $marriedContractfile;
       $applicant->save();
-
       return ['message' => 'Success Data'];
    }
    public function thesisDescriptionStore(Request $request)

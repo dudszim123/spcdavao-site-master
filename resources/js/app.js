@@ -46,8 +46,12 @@ let routes = [
    {path: '/student-applicants', component: require('./components/StudentApplicants.vue').default },
    {path: '/student-portal', component: require('./components/StudentPortalComponent.vue').default },
    {path: '/user-profile', component: require('./components/UserProfile.vue').default },
-   {path: '/payment-history', component: require('./components/PaymentHistory.vue').default }
+   {path: '/payment-history', component: require('./components/PaymentHistory.vue').default },
+   // {path: '/thank-you', component: require('./components/applicantForm/ThankYouApplicant.vue').default },
 
+   // ADMISSION
+   {path: '/admission-applicant-list', component: require('./components/admission/AdmissionListApplicants.vue').default },
+   {path: '/applicant-submited-data-view', component: require('./components/admission/ApplicantSubmitedDataView.vue').default,props: true,name: 'ApplicantSubmitedDataView' },
 ];
 const router = new VueRouter({
    mode: 'history',
@@ -55,7 +59,10 @@ const router = new VueRouter({
 });
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('registration', require('./components/Registration.vue').default);
-Vue.component('masteral-form', require('./components/applicantForm/masteral.vue').default);
+Vue.component('masteral-form', require('./components/applicantForm/Masteral.vue').default);
+Vue.component('welcome-applicant', require('./components/applicantForm/WelcomeApplicant.vue').default);
+Vue.component('thank-you', require('./components/applicantForm/ThankYouApplicant.vue').default);
+// Vue.component('applicant-submited-data-view', require('./components/admission/ApplicantSubmitedDataView.vue').default,);
 
 Vue.component('ValidationProvider', ValidationProvider);
 Vue.component('ValidationObserver', ValidationObserver);
@@ -66,8 +73,8 @@ const app = new Vue({
 
 
 
-Vue.filter('ToUpperCaseText', function(test){
-   return test.toUpperCase();
+Vue.filter('ToUpperCaseText', function(text){
+   return text.toUpperCase();
 });
 Vue.filter('ActiveText', function(text){
    if(text == '1')
